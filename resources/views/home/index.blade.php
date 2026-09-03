@@ -7,7 +7,7 @@
         <div class="absolute inset-0">
             <img src="/storage/demo/hero-1.jpg" alt="" class="hero-fade-a absolute inset-0 h-full w-full object-cover">
             <img src="/storage/demo/hero-2.jpg" alt="" class="hero-fade-b absolute inset-0 h-full w-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/75 to-[#0B3A1F]/90"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/50 to-[#0B3A1F]/70"></div>
         </div>
 
         <div class="relative z-10 px-6 py-16 sm:py-24">
