@@ -6,7 +6,7 @@
         @if ($user->photo_url)
             <img src="{{ $user->photo_url }}" alt="" class="h-9 w-9 rounded-full object-cover">
         @else
-            <x-trust-shield class="h-9 w-9" color="#EC0C8C" />
+            <x-trust-shield class="h-9 w-9" color="#15803D" />
         @endif
         <div>
             <h1 class="flex items-center gap-2 text-2xl font-semibold text-primary">

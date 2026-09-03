@@ -28,13 +28,45 @@
         @endif
     </section>
 
+    {{-- Featured listings, grouped by category --}}
+    @if ($featuredByCategory->isNotEmpty())
+        <section>
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-semibold text-primary sm:text-3xl">Featured on TrustHire</h2>
+                <a href="{{ route('browse') }}" class="text-sm text-accent hover:underline">Browse all &rarr;</a>
+            </div>
+            <div class="mt-8 space-y-10">
+                @foreach ($featuredByCategory as $categoryName => $categoryListings)
+                    <div>
+                        <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-accent">{{ $categoryName }}</h3>
+                        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            @foreach ($categoryListings as $listing)
+                                <a href="{{ route('listings.show', $listing) }}" class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm hover:border-accent">
+                                    @if ($listing->firstPhoto())
+                                        <img src="{{ $listing->firstPhoto() }}" alt="{{ $listing->title }}" class="aspect-video w-full object-cover">
+                                    @else
+                                        <div class="flex aspect-video w-full items-center justify-center bg-gray-50 text-xs text-gray-400">No photo</div>
+                                    @endif
+                                    <div class="p-3">
+                                        <h4 class="truncate text-sm font-semibold text-primary">{{ $listing->title }}</h4>
+                                        <p class="mt-1 text-sm font-medium text-accent">${{ number_format($listing->price, 2) }} / {{ $listing->price_unit }}</p>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     {{-- Why choose us --}}
     <section>
         <h2 class="text-center text-2xl font-semibold text-primary sm:text-3xl">Why Choose TrustHire?</h2>
         <p class="mx-auto mt-2 max-w-xl text-center text-gray-600">Verification and direct negotiation, built into how the platform works.</p>
         <div class="mt-10 grid gap-6 sm:grid-cols-3">
             <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
-                <x-trust-shield class="mx-auto h-8 w-8" color="#EC0C8C" />
+                <x-trust-shield class="mx-auto h-8 w-8" color="#15803D" />
                 <h3 class="mt-4 text-lg font-semibold text-primary">Verified Community</h3>
                 <p class="mt-2 text-sm text-gray-600">Every member starts with phone verification. ID and selfie checks are rolling out for high-value hires.</p>
             </div>
@@ -64,10 +96,10 @@
                         ['Compare offers', "Review price, availability, and the lender's rating, then accept the offer that works for you."],
                         ['Chat & arrange pickup', 'Message your lender directly in-app to sort out handoff details.'],
                         ['Hire & review', 'Use the item, mark the booking complete, and leave a rating for the next person.'],
-                    ] as $i => [$title, $body])
+                    ] as $i => [$stepTitle, $stepBody])
                         <li class="flex gap-4">
                             <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-semibold text-white">{{ $i + 1 }}</span>
-                            <div><p class="font-medium text-primary">{{ $title }}</p><p class="text-sm text-gray-600">{{ $body }}</p></div>
+                            <div><p class="font-medium text-primary">{{ $stepTitle }}</p><p class="text-sm text-gray-600">{{ $stepBody }}</p></div>
                         </li>
                     @endforeach
                 </ol>
@@ -80,10 +112,10 @@
                         ['Receive requests', 'Browse open requests in your category, or wait for renters to find your listing.'],
                         ['Send an offer', 'Quote your price directly on a renter\'s request — no bidding wars, no commission cut.'],
                         ['Get hired & rated', 'Confirm the booking, hand off the item, and build your reputation with every hire.'],
-                    ] as $i => [$title, $body])
+                    ] as $i => [$stepTitle, $stepBody])
                         <li class="flex gap-4">
                             <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-semibold text-white">{{ $i + 1 }}</span>
-                            <div><p class="font-medium text-primary">{{ $title }}</p><p class="text-sm text-gray-600">{{ $body }}</p></div>
+                            <div><p class="font-medium text-primary">{{ $stepTitle }}</p><p class="text-sm text-gray-600">{{ $stepBody }}</p></div>
                         </li>
                     @endforeach
                 </ol>
