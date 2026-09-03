@@ -11,11 +11,11 @@
         </div>
 
         <div class="relative z-10 px-6 py-16 sm:py-24">
-            <span class="inline-block rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs uppercase tracking-wide text-accent-light">A local, verified hiring marketplace</span>
-            <h1 class="mx-auto mt-6 max-w-2xl font-serif text-5xl font-semibold leading-tight text-white sm:text-6xl">
+            <span class="hero-text-shadow inline-block rounded-full border border-white/30 bg-black/20 px-4 py-1 text-xs uppercase tracking-wide text-accent-light">A local, verified hiring marketplace</span>
+            <h1 class="hero-text-shadow mx-auto mt-6 max-w-2xl font-serif text-5xl font-semibold leading-tight text-white sm:text-6xl">
                 {{ $settings->hero_headline }}
             </h1>
-            <p class="mx-auto mt-5 max-w-xl text-lg text-white/85">{{ $settings->hero_subtext }}</p>
+            <p class="hero-text-shadow mx-auto mt-5 max-w-xl text-lg text-white/95">{{ $settings->hero_subtext }}</p>
 
             <form action="{{ route('browse') }}" method="get" class="mx-auto mt-8 flex max-w-md gap-2">
                 <input type="text" name="location" placeholder="Enter your city or area" class="flex-1 rounded-full border-0 bg-white px-4 py-3 text-sm shadow-lg transition focus:outline-none focus:ring-2 focus:ring-accent-light">

@@ -57,3 +57,7 @@ h1, h2, h3 {
 .hero-fade-b {
     animation: heroFadeB 14s ease-in-out infinite;
 }
+
+.hero-text-shadow {
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
