@@ -21,10 +21,24 @@ class DemoListingSeeder extends Seeder
         Listing::where('owner_id', $owner->id)->delete();
 
         $items = [
-            ['Cameras', 'Vintage Film Camera', 15, 'day', 'camera.jpg'],
+            ['Cameras', 'Canon EOS R Mirrorless Camera Kit', 25, 'day', 'camera.jpg'],
             ['Vehicles', 'Classic Car for Photoshoots & Events', 60, 'day', 'car.jpg'],
+            ['Electronics', 'DJI Camera Drone', 35, 'day', 'drone.jpg'],
             ['Electronics', 'Gaming Console Controller', 5, 'day', 'controller.jpg'],
             ['Electronics', 'Laptop & Desk Accessories Set', 18, 'day', 'laptop.jpg'],
+            ['Machinery', 'Portable Diesel Generator 3.5kVA', 15, 'day', 'generator.jpg'],
+            ['Garden Equipment', 'Petrol Grass Trimmer / Brushcutter', 8, 'day', 'trimmer.jpg'],
+            ['Garden Equipment', 'Stihl Petrol Hedge Trimmer', 9, 'day', 'hedge-trimmer.jpg'],
+            ['Garden Equipment', 'Garden Hose Pipe Set', 4, 'day', 'hosepipe.jpg'],
+            ['Garden Equipment', 'Cordless Garden Tools Set (Mower, Trimmer, Blower, Chainsaw)', 20, 'day', 'garden-tools-set.jpg'],
+            ['Garden Equipment', 'Hand Garden Tools Set (Shears, Fork, Trowel, Gloves)', 10, 'day', 'garden-tools-flatlay.jpg'],
+            ['Agricultural Equipment', 'Farm Tractor with Tiller Attachment', 80, 'day', 'tractor-tiller.jpg'],
+            ['Agricultural Equipment', 'Tow-Behind Lawn & Farm Aerator', 18, 'day', 'aerator.jpg'],
+            ['Tools', 'Petrol Demolition Jackhammer', 22, 'day', 'jackhammer.jpg'],
+            ['Event Gear', 'Folding Chairs & Tables Set', 15, 'day', 'chairs-tables.jpg'],
+            ['Event Gear', 'Marquee Tent with Chairs Setup', 90, 'day', 'tent-kenya.jpg'],
+            ['Event Gear', '20x20 High Peak Party Tent', 70, 'day', 'tent-whitepeak.jpg'],
+            ['Event Gear', 'Line Array PA Speaker System', 45, 'day', 'pa-speakers.jpg'],
             ['Fashion & Luxury', 'Statement Heels for Photoshoot Hire', 10, 'day', 'heels.jpg'],
             ['Fashion & Luxury', 'Formal Event Accessories Set', 12, 'day', 'accessories.jpg'],
         ];
