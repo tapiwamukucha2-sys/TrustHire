@@ -3,45 +3,55 @@
 @section('content')
 <div class="space-y-24">
     {{-- Hero --}}
-    <section class="reveal text-center">
-        <span class="inline-block rounded-full border border-accent/30 px-4 py-1 text-xs uppercase tracking-wide text-accent">A local, verified hiring marketplace</span>
-        <h1 class="mx-auto mt-6 max-w-2xl font-serif text-4xl font-semibold leading-tight text-primary sm:text-5xl">
-            {{ $settings->hero_headline }}
-        </h1>
-        <p class="mx-auto mt-5 max-w-xl text-gray-600">{{ $settings->hero_subtext }}</p>
-
-        <form action="{{ route('browse') }}" method="get" class="mx-auto mt-8 flex max-w-md gap-2">
-            <input type="text" name="location" placeholder="Enter your city or area" class="flex-1 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm shadow-sm transition focus:border-accent focus:shadow-md focus:outline-none">
-            <button type="submit" class="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:scale-105 hover:opacity-90">Search</button>
-        </form>
-
-        <div class="mx-auto mt-5 flex max-w-xl flex-wrap justify-center gap-2 text-xs">
-            @foreach ($categories->take(6) as $category)
-                <a href="{{ route('browse', ['category' => $category->slug]) }}" class="rounded-full border border-gray-300 px-3 py-1 text-gray-600 transition hover:border-accent hover:text-accent">{{ $category->name }}</a>
-            @endforeach
+    <section class="reveal relative overflow-hidden rounded-2xl text-center shadow-xl">
+        <div class="absolute inset-0">
+            <img src="/storage/demo/hero-1.jpg" alt="" class="hero-fade-a absolute inset-0 h-full w-full object-cover">
+            <img src="/storage/demo/hero-2.jpg" alt="" class="hero-fade-b absolute inset-0 h-full w-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/75 to-[#0B3A1F]/90"></div>
         </div>
 
-        @if ($verifiedCount > 0)
-            <p class="mt-6 text-sm text-gray-500">
-                <span class="font-semibold text-accent">{{ $verifiedCount }}</span> verified {{ Str::plural('member', $verifiedCount) }} on TrustHire
-            </p>
-        @endif
+        <div class="relative z-10 px-6 py-16 sm:py-24">
+            <span class="inline-block rounded-full border border-white/30 bg-white/10 px-4 py-1 text-xs uppercase tracking-wide text-accent-light">A local, verified hiring marketplace</span>
+            <h1 class="mx-auto mt-6 max-w-2xl font-serif text-5xl font-semibold leading-tight text-white sm:text-6xl">
+                {{ $settings->hero_headline }}
+            </h1>
+            <p class="mx-auto mt-5 max-w-xl text-lg text-white/85">{{ $settings->hero_subtext }}</p>
 
-        {{-- Themed visual strip: property, agreements, garden, tools --}}
-        <div class="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <form action="{{ route('browse') }}" method="get" class="mx-auto mt-8 flex max-w-md gap-2">
+                <input type="text" name="location" placeholder="Enter your city or area" class="flex-1 rounded-full border-0 bg-white px-4 py-3 text-sm shadow-lg transition focus:outline-none focus:ring-2 focus:ring-accent-light">
+                <button type="submit" class="rounded-full bg-accent px-5 py-3 text-sm font-medium text-white shadow-lg transition hover:scale-105 hover:opacity-90">Search</button>
+            </form>
+
+            <div class="mx-auto mt-5 flex max-w-xl flex-wrap justify-center gap-2 text-xs">
+                @foreach ($categories->take(6) as $category)
+                    <a href="{{ route('browse', ['category' => $category->slug]) }}" class="rounded-full border border-white/30 px-3 py-1 text-white/90 transition hover:border-accent-light hover:text-accent-light">{{ $category->name }}</a>
+                @endforeach
+            </div>
+
+            @if ($verifiedCount > 0)
+                <p class="mt-6 text-sm text-white/80">
+                    <span class="font-semibold text-accent-light">{{ $verifiedCount }}</span> verified {{ Str::plural('member', $verifiedCount) }} on TrustHire
+                </p>
+            @endif
+        </div>
+    </section>
+
+    {{-- Themed visual strip: property, agreements, garden, tools --}}
+    <section class="reveal -mt-16">
+        <div class="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
                 <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M3 11 12 4l9 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
                 <p class="mt-2 text-xs font-medium text-primary">Property &amp; Spaces</p>
             </div>
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
                 <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M3 12h3l2.5-2.5 3 3L15 9l3 3h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 16h2M15 16h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
                 <p class="mt-2 text-xs font-medium text-primary">Trusted Agreements</p>
             </div>
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
                 <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M9 3 6 6m9-3 3 3M6 6 3 9l12 12 3-3L6 6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <p class="mt-2 text-xs font-medium text-primary">Garden Equipment</p>
             </div>
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 text-center shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
                 <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2 2.6-2.6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <p class="mt-2 text-xs font-medium text-primary">Tools &amp; Machinery</p>
             </div>

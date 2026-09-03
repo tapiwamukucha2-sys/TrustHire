@@ -16,7 +16,7 @@
 }
 
 html {
-    font-size: 17.5px;
+    font-size: 18.5px;
 }
 
 body {
@@ -36,4 +36,24 @@ h1, h2, h3 {
 .reveal-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+@keyframes heroFadeA {
+    0%, 45% { opacity: 1; }
+    50%, 95% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes heroFadeB {
+    0%, 45% { opacity: 0; }
+    50%, 95% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.hero-fade-a {
+    animation: heroFadeA 14s ease-in-out infinite;
+}
+
+.hero-fade-b {
+    animation: heroFadeB 14s ease-in-out infinite;
 }
