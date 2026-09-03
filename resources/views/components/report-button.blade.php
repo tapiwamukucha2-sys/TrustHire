@@ -1,8 +1,12 @@
 @props(['targetUserId' => null, 'targetListingId' => null, 'label' => 'Report'])
 
 <div x-data="{ open: false }">
-    <button type="button" x-show="!open" @click="open = true" class="text-xs text-gray-500 underline hover:text-accent">{{ $label }}</button>
-    <form x-show="open" x-cloak method="POST" action="{{ route('reports.store') }}" class="mt-2 space-y-2 rounded border border-gray-200 bg-white p-3 text-sm">
+    <button type="button" x-show="!open" @click="open = true" class="text-xs text-gray-500 underline transition hover:text-accent">{{ $label }}</button>
+    <form x-show="open"
+          x-transition:enter="transition ease-out duration-200"
+          x-transition:enter-start="opacity-0 -translate-y-1"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-cloak method="POST" action="{{ route('reports.store') }}" class="mt-2 space-y-2 rounded border border-gray-200 bg-white p-3 text-sm">
         @csrf
         @if ($targetUserId)
             <input type="hidden" name="target_user_id" value="{{ $targetUserId }}">

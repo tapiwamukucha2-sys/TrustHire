@@ -3,21 +3,21 @@
 @section('content')
 <div class="space-y-24">
     {{-- Hero --}}
-    <section class="text-center">
+    <section class="reveal text-center">
         <span class="inline-block rounded-full border border-accent/30 px-4 py-1 text-xs uppercase tracking-wide text-accent">A local, verified hiring marketplace</span>
-        <h1 class="mx-auto mt-6 max-w-2xl text-4xl font-semibold leading-tight text-primary sm:text-5xl">
+        <h1 class="mx-auto mt-6 max-w-2xl font-serif text-4xl font-semibold leading-tight text-primary sm:text-5xl">
             {{ $settings->hero_headline }}
         </h1>
         <p class="mx-auto mt-5 max-w-xl text-gray-600">{{ $settings->hero_subtext }}</p>
 
         <form action="{{ route('browse') }}" method="get" class="mx-auto mt-8 flex max-w-md gap-2">
-            <input type="text" name="location" placeholder="Enter your city or area" class="flex-1 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-accent focus:outline-none">
-            <button type="submit" class="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white hover:opacity-90">Search</button>
+            <input type="text" name="location" placeholder="Enter your city or area" class="flex-1 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm shadow-sm transition focus:border-accent focus:shadow-md focus:outline-none">
+            <button type="submit" class="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:scale-105 hover:opacity-90">Search</button>
         </form>
 
         <div class="mx-auto mt-5 flex max-w-xl flex-wrap justify-center gap-2 text-xs">
             @foreach ($categories->take(6) as $category)
-                <a href="{{ route('browse', ['category' => $category->slug]) }}" class="rounded-full border border-gray-300 px-3 py-1 text-gray-600 hover:border-accent hover:text-accent">{{ $category->name }}</a>
+                <a href="{{ route('browse', ['category' => $category->slug]) }}" class="rounded-full border border-gray-300 px-3 py-1 text-gray-600 transition hover:border-accent hover:text-accent">{{ $category->name }}</a>
             @endforeach
         </div>
 
@@ -26,13 +26,33 @@
                 <span class="font-semibold text-accent">{{ $verifiedCount }}</span> verified {{ Str::plural('member', $verifiedCount) }} on TrustHire
             </p>
         @endif
+
+        {{-- Themed visual strip: property, agreements, garden, tools --}}
+        <div class="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M3 11 12 4l9 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                <p class="mt-2 text-xs font-medium text-primary">Property &amp; Spaces</p>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M3 12h3l2.5-2.5 3 3L15 9l3 3h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 16h2M15 16h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <p class="mt-2 text-xs font-medium text-primary">Trusted Agreements</p>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M9 3 6 6m9-3 3 3M6 6 3 9l12 12 3-3L6 6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="mt-2 text-xs font-medium text-primary">Garden Equipment</p>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <svg viewBox="0 0 24 24" fill="none" class="mx-auto h-8 w-8 text-accent"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2 2.6-2.6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="mt-2 text-xs font-medium text-primary">Tools &amp; Machinery</p>
+            </div>
+        </div>
     </section>
 
     {{-- Featured listings, grouped by category --}}
     @if ($featuredByCategory->isNotEmpty())
-        <section>
+        <section class="reveal">
             <div class="flex items-center justify-between">
-                <h2 class="text-2xl font-semibold text-primary sm:text-3xl">Featured on TrustHire</h2>
+                <h2 class="font-serif text-2xl font-semibold text-primary sm:text-3xl">Featured on TrustHire</h2>
                 <a href="{{ route('browse') }}" class="text-sm text-accent hover:underline">Browse all &rarr;</a>
             </div>
             <div class="mt-8 space-y-10">
@@ -41,7 +61,7 @@
                         <h3 class="mb-3 text-sm font-semibold uppercase tracking-wide text-accent">{{ $categoryName }}</h3>
                         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             @foreach ($categoryListings as $listing)
-                                <a href="{{ route('listings.show', $listing) }}" class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm hover:border-accent">
+                                <a href="{{ route('listings.show', $listing) }}" class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-accent hover:shadow-md">
                                     @if ($listing->firstPhoto())
                                         <img src="{{ $listing->firstPhoto() }}" alt="{{ $listing->title }}" class="aspect-video w-full object-cover">
                                     @else
@@ -61,21 +81,21 @@
     @endif
 
     {{-- Why choose us --}}
-    <section>
-        <h2 class="text-center text-2xl font-semibold text-primary sm:text-3xl">Why Choose TrustHire?</h2>
+    <section class="reveal">
+        <h2 class="text-center font-serif text-2xl font-semibold text-primary sm:text-3xl">Why Choose TrustHire?</h2>
         <p class="mx-auto mt-2 max-w-xl text-center text-gray-600">Verification and direct negotiation, built into how the platform works.</p>
         <div class="mt-10 grid gap-6 sm:grid-cols-3">
-            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <x-trust-shield class="mx-auto h-8 w-8" color="#15803D" />
                 <h3 class="mt-4 text-lg font-semibold text-primary">Verified Community</h3>
                 <p class="mt-2 text-sm text-gray-600">Every member starts with phone verification. ID and selfie checks are rolling out for high-value hires.</p>
             </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <div class="mx-auto flex h-8 w-8 items-center justify-center text-accent">&#9878;</div>
                 <h3 class="mt-4 text-lg font-semibold text-primary">Direct Negotiation</h3>
                 <p class="mt-2 text-sm text-gray-600">Post what you need or have, and negotiate price directly. No bidding wars, no platform commission.</p>
             </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
+            <div class="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                 <div class="mx-auto flex h-8 w-8 items-center justify-center text-accent">&#128205;</div>
                 <h3 class="mt-4 text-lg font-semibold text-primary">Local & Personal</h3>
                 <p class="mt-2 text-sm text-gray-600">Built for hiring within your own community — from and to people you can actually meet.</p>
@@ -84,8 +104,8 @@
     </section>
 
     {{-- How it works --}}
-    <section id="how-it-works">
-        <h2 class="text-center text-2xl font-semibold text-primary sm:text-3xl">How it Works</h2>
+    <section id="how-it-works" class="reveal">
+        <h2 class="text-center font-serif text-2xl font-semibold text-primary sm:text-3xl">How it Works</h2>
         <p class="mx-auto mt-2 max-w-xl text-center text-gray-600">Simple on both sides of the hire.</p>
         <div class="mt-10 grid gap-10 md:grid-cols-2">
             <div>
@@ -124,8 +144,8 @@
     </section>
 
     {{-- Trust & safety --}}
-    <section class="rounded-lg border border-gray-200 bg-white p-8 shadow-sm sm:p-10">
-        <h2 class="text-center text-2xl font-semibold text-primary">Your Safety is Our Priority</h2>
+    <section class="reveal rounded-lg border border-gray-200 bg-white p-8 shadow-sm sm:p-10">
+        <h2 class="text-center font-serif text-2xl font-semibold text-primary">Your Safety is Our Priority</h2>
         <p class="mx-auto mt-2 max-w-xl text-center text-gray-600">Trust is the reason TrustHire exists — here's what's live today, and what's coming next.</p>
         <div class="mt-8 grid gap-6 sm:grid-cols-3">
             <div><h3 class="font-medium text-accent">Phone-Verified Identity</h3><p class="mt-1 text-sm text-gray-600">Every member logs in with a verified phone number before posting or hiring.</p></div>
@@ -136,25 +156,25 @@
     </section>
 
     {{-- Categories --}}
-    <section>
+    <section class="reveal">
         <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-semibold text-primary sm:text-3xl">Browse Categories</h2>
+            <h2 class="font-serif text-2xl font-semibold text-primary sm:text-3xl">Browse Categories</h2>
             <a href="{{ route('browse') }}" class="text-sm text-accent hover:underline">View all &rarr;</a>
         </div>
         <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             @foreach ($categories as $category)
-                <a href="{{ route('browse', ['category' => $category->slug]) }}" class="rounded-lg border border-gray-200 bg-white p-4 text-center text-sm font-medium shadow-sm hover:-translate-y-1 hover:border-accent hover:text-accent hover:shadow-md">{{ $category->name }}</a>
+                <a href="{{ route('browse', ['category' => $category->slug]) }}" class="rounded-lg border border-gray-200 bg-white p-4 text-center text-sm font-medium shadow-sm transition hover:-translate-y-1 hover:border-accent hover:text-accent hover:shadow-md">{{ $category->name }}</a>
             @endforeach
         </div>
     </section>
 
     {{-- CTA --}}
-    <section class="rounded-lg bg-primary px-8 py-12 text-center text-white sm:py-16">
-        <h2 class="text-2xl font-semibold sm:text-3xl">Ready to Get Started?</h2>
+    <section class="reveal rounded-lg bg-gradient-to-br from-primary to-[#0B3A1F] px-8 py-12 text-center text-white sm:py-16">
+        <h2 class="font-serif text-2xl font-semibold sm:text-3xl">Ready to Get Started?</h2>
         <p class="mx-auto mt-2 max-w-md text-sm text-white/70">Join TrustHire and start hiring — or earning — from your local community today.</p>
         <div class="mt-6 flex flex-wrap justify-center gap-3">
-            <a href="{{ route('login') }}" class="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white hover:opacity-90">Create Free Account</a>
-            <a href="{{ route('browse') }}" class="rounded-full border border-white/40 px-5 py-2.5 text-sm font-medium text-white hover:border-white">Browse Equipment</a>
+            <a href="{{ route('login') }}" class="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-md transition hover:scale-105 hover:opacity-90">Create Free Account</a>
+            <a href="{{ route('browse') }}" class="rounded-full border border-white/40 px-5 py-2.5 text-sm font-medium text-white transition hover:border-white">Browse Equipment</a>
         </div>
     </section>
 </div>
