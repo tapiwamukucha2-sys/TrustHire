@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OtpCode;
+use App\Models\PasswordResetCode;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -136,6 +137,67 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return $this->redirectAfterLogin($request);
+    }
+
+    public function showForgotPassword(): \Illuminate\View\View
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function sendResetCode(Request $request): RedirectResponse
+    {
+        $data = $request->validate(['email' => 'required|email']);
+        $email = strtolower($data['email']);
+
+        $key = 'password-reset-send:'.$email;
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            throw ValidationException::withMessages([
+                'email' => 'Too many reset requests for this email. Try again in a few minutes.',
+            ]);
+        }
+        RateLimiter::hit($key, 900);
+
+        if (! User::where('email', $email)->exists()) {
+            return back()->withErrors(['email' => 'No account found with that email.']);
+        }
+
+        $code = PasswordResetCode::generateFor($email);
+
+        // Dev stub: no email provider wired up yet, so the code is flashed back to the caller.
+        return redirect()->route('password.reset', ['email' => $email])
+            ->with('devCode', $code);
+    }
+
+    public function showResetPassword(Request $request): \Illuminate\View\View
+    {
+        return view('auth.reset-password', ['email' => $request->query('email', '')]);
+    }
+
+    public function resetPassword(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => 'required|email',
+            'code' => 'required|string',
+            'password' => 'required|string',
+            'password_confirmation' => 'required|string|same:password',
+        ]);
+
+        $email = strtolower($data['email']);
+
+        if (! preg_match(self::PASSWORD_REGEX, $data['password'])) {
+            return back()->withErrors([
+                'password' => 'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.',
+            ])->with('email', $email);
+        }
+
+        if (! PasswordResetCode::verify($email, $data['code'])) {
+            return back()->withErrors(['code' => 'Invalid or expired code.'])->with('email', $email);
+        }
+
+        $user = User::where('email', $email)->first();
+        $user->update(['password' => Hash::make($data['password'])]);
+
+        return redirect()->route('login')->with('status', 'Password reset. You can now log in.');
     }
 
     public function logout(Request $request): RedirectResponse

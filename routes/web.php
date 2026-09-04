@@ -36,12 +36,20 @@ Route::get('/trust-safety', fn () => view('pages.trust-safety'))->name('trust-sa
 Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::get('/admin/forgot-password', [AdminAuthController::class, 'showForgotPassword'])->name('admin.password.forgot');
+Route::post('/admin/forgot-password', [AdminAuthController::class, 'sendResetCode'])->name('admin.password.send');
+Route::get('/admin/reset-password', [AdminAuthController::class, 'showResetPassword'])->name('admin.password.reset');
+Route::post('/admin/reset-password', [AdminAuthController::class, 'resetPassword'])->name('admin.password.update');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
 Route::post('/otp/send', [AuthController::class, 'sendOtp'])->name('otp.send')->middleware('guest');
 Route::post('/otp/verify', [AuthController::class, 'verifyOtp'])->name('otp.verify')->middleware('guest');
 Route::post('/register', [AuthController::class, 'registerEmail'])->name('register')->middleware('guest');
 Route::post('/login/email', [AuthController::class, 'loginEmail'])->name('login.email')->middleware('guest');
+Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.forgot')->middleware('guest');
+Route::post('/forgot-password', [AuthController::class, 'sendResetCode'])->name('password.send')->middleware('guest');
+Route::get('/reset-password', [AuthController::class, 'showResetPassword'])->name('password.reset')->middleware('guest');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware('auth')->group(function () {

@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Login — TrustHire</title>
+    <title>Admin Password Recovery — TrustHire</title>
     @vite(['resources/css/app.css'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="flex min-h-screen items-center justify-center bg-[#0B3A1F] px-4">
     <div class="w-full max-w-sm rounded-lg bg-white p-8 shadow-xl">
@@ -14,28 +13,23 @@
             TrustHire Admin
         </div>
 
-        @if (session('status'))
-            <p class="mb-4 rounded border border-accent/30 bg-accent/5 p-3 text-sm text-accent">{{ session('status') }}</p>
-        @endif
+        <h1 class="mb-2 text-lg font-semibold text-primary">Forgot your password?</h1>
+        <p class="mb-6 text-sm text-gray-600">Enter your admin username and we'll send you a reset code.</p>
+
         @if ($errors->any())
             <p class="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">{{ $errors->first() }}</p>
         @endif
 
-        <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-4">
+        <form method="POST" action="{{ route('admin.password.send') }}" class="space-y-4">
             @csrf
             <label class="block text-sm text-gray-600">
                 Username
                 <input type="text" name="username" required autofocus value="{{ old('username') }}" class="mt-1 w-full rounded border border-gray-300 px-3 py-2 focus:border-accent focus:outline-none">
             </label>
-            <label class="block text-sm text-gray-600">
-                Password
-                <x-password-input class="mt-1" />
-            </label>
-            <button type="submit" class="w-full rounded-full bg-accent px-3 py-2 font-medium text-white hover:opacity-90">Log in</button>
+            <button type="submit" class="w-full rounded-full bg-accent px-3 py-2 font-medium text-white hover:opacity-90">Send reset code</button>
         </form>
 
-        <a href="{{ route('admin.password.forgot') }}" class="mt-4 block text-center text-xs text-accent hover:underline">Forgot password?</a>
-        <a href="{{ route('home') }}" class="mt-2 block text-center text-xs text-gray-400 hover:text-gray-600">&larr; Back to site</a>
+        <a href="{{ route('admin.login') }}" class="mt-6 block text-center text-xs text-gray-400 hover:text-gray-600">&larr; Back to log in</a>
     </div>
 </body>
 </html>
