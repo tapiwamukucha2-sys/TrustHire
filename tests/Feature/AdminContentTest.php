@@ -47,5 +47,5 @@ test('a category with listings cannot be deleted', function () {
 test('a non-admin cannot access the admin content panel', function () {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->get('/admin/content')->assertRedirect('/');
+    $this->actingAs($user)->get('/admin/content')->assertRedirect('/admin/login');
 });

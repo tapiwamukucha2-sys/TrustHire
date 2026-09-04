@@ -148,7 +148,7 @@
         <div class="border-t border-white/10 py-4 text-center text-xs">
             &copy; {{ date('Y') }} TrustHire. Peer-to-peer local hiring marketplace.
             &middot;
-            <a href="{{ route('login') }}" class="text-white/30 transition hover:text-white/60">Admin Login</a>
+            <a href="{{ route('admin.login') }}" class="text-white/30 transition hover:text-white/60">Admin Login</a>
         </div>
     </footer>
 

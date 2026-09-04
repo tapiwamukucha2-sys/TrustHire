@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @php
     $reasonLabels = [
@@ -9,7 +9,6 @@
 
 @section('content')
 <div>
-    @include('admin._nav')
     <h1 class="mb-6 text-2xl font-semibold text-primary">Open reports</h1>
     @if ($reports->isEmpty())
         <p class="text-gray-500">No open reports.</p>

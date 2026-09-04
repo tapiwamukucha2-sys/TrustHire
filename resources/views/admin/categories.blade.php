@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="max-w-lg">
-    @include('admin._nav')
     <h1 class="mb-6 text-2xl font-semibold text-primary">Categories</h1>
 
     @if (request('saved'))

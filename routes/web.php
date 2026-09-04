@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminListingController;
+use App\Http\Controllers\Admin\AdminMessageController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ContentController as AdminContentController;
 use App\Http\Controllers\Admin\ReportAdminController;
@@ -27,6 +32,10 @@ Route::get('/pricing', fn () => view('pages.stub', ['title' => 'Pricing', 'body'
 Route::get('/help', fn () => view('pages.stub', ['title' => 'Help Center', 'body' => "We're building out a full help center. In the meantime, reach us via WhatsApp or email in the footer."]))->name('help');
 Route::get('/disputes', fn () => view('pages.stub', ['title' => 'Dispute Resolution', 'body' => 'Disputes between renters and lenders are currently handled manually by our team — get in touch via WhatsApp or email.']))->name('disputes');
 Route::get('/trust-safety', fn () => view('pages.trust-safety'))->name('trust-safety');
+
+Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
 Route::post('/otp/send', [AuthController::class, 'sendOtp'])->name('otp.send')->middleware('guest');
@@ -63,6 +72,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
 
     Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/listings', [AdminListingController::class, 'index'])->name('listings.index');
+        Route::get('/listings/{listing}/edit', [AdminListingController::class, 'edit'])->name('listings.edit');
+        Route::put('/listings/{listing}', [AdminListingController::class, 'update'])->name('listings.update');
+        Route::delete('/listings/{listing}', [AdminListingController::class, 'destroy'])->name('listings.destroy');
+
+        Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
+
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+
         Route::get('/verifications', [AdminVerificationController::class, 'index'])->name('verifications.index');
         Route::post('/verifications/{user}/approve', [AdminVerificationController::class, 'approve'])->name('verifications.approve');
         Route::post('/verifications/{user}/reject', [AdminVerificationController::class, 'reject'])->name('verifications.reject');

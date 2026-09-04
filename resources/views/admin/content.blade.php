@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="max-w-lg">
-    @include('admin._nav')
     <h1 class="mb-2 text-2xl font-semibold text-primary">Site content</h1>
     <p class="mb-6 text-sm text-gray-600">Edit the homepage hero text and an optional site-wide announcement banner — changes go live immediately, no code deploy needed.</p>
 
@@ -37,6 +36,27 @@
                     <label class="block text-xs text-gray-600">
                         Photo 2
                         <input type="file" name="hero_image_2" accept="image/*" class="mt-1 block w-full text-xs">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+            <p class="mb-3 text-sm font-medium text-primary">"Why Choose TrustHire" photos</p>
+            <p class="mb-4 text-xs text-gray-500">Used on the two "Verified Community" / "Direct Negotiation" cards on the homepage.</p>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                    <img src="{{ $settings->trustImage1Url() }}" alt="Trust photo 1" class="mb-2 h-28 w-full rounded object-cover">
+                    <label class="block text-xs text-gray-600">
+                        Photo 1
+                        <input type="file" name="trust_image_1" accept="image/*" class="mt-1 block w-full text-xs">
+                    </label>
+                </div>
+                <div>
+                    <img src="{{ $settings->trustImage2Url() }}" alt="Trust photo 2" class="mb-2 h-28 w-full rounded object-cover">
+                    <label class="block text-xs text-gray-600">
+                        Photo 2
+                        <input type="file" name="trust_image_2" accept="image/*" class="mt-1 block w-full text-xs">
                     </label>
                 </div>
             </div>

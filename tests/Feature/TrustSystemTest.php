@@ -17,7 +17,7 @@ test('verification: submit, admin approve, badge appears; report: file and resol
     expect($user->fresh()->verification_tier)->toBe('PENDING');
 
     // Not an admin yet.
-    $this->actingAs($user)->get('/admin/verifications')->assertRedirect('/');
+    $this->actingAs($user)->get('/admin/verifications')->assertRedirect('/admin/login');
 
     $user->update(['is_admin' => true]);
 
@@ -62,6 +62,6 @@ test('a non-admin cannot approve verifications', function () {
 
     $response = $this->actingAs($regular)->post("/admin/verifications/{$admin->id}/approve");
 
-    $response->assertRedirect('/');
+    $response->assertRedirect('/admin/login');
     expect($admin->fresh()->verification_tier)->toBe('BASIC');
 });

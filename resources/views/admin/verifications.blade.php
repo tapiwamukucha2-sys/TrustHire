@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div>
-    @include('admin._nav')
     <h1 class="mb-6 text-2xl font-semibold text-primary">Verification requests</h1>
     @if ($pending->isEmpty())
         <p class="text-gray-500">Nothing pending.</p>

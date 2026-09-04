@@ -96,14 +96,14 @@
         <p class="mx-auto mt-2 max-w-xl text-center text-gray-600">Verification and direct negotiation, built into how the platform works.</p>
         <div class="mt-10 grid gap-6 sm:grid-cols-3">
             <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <img src="/storage/demo/trust-handshake.jpg" alt="" class="h-36 w-full object-cover">
+                <img src="{{ $settings->trustImage1Url() }}" alt="" class="h-36 w-full object-cover">
                 <div class="p-6 text-center">
                     <h3 class="text-lg font-semibold text-primary">Verified Community</h3>
                     <p class="mt-2 text-sm text-gray-600">Every member starts with phone verification. ID and selfie checks are rolling out for high-value hires.</p>
                 </div>
             </div>
             <div class="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <img src="/storage/demo/trust-keyhandover.jpg" alt="" class="h-36 w-full object-cover">
+                <img src="{{ $settings->trustImage2Url() }}" alt="" class="h-36 w-full object-cover">
                 <div class="p-6 text-center">
                     <h3 class="text-lg font-semibold text-primary">Direct Negotiation</h3>
                     <p class="mt-2 text-sm text-gray-600">Post what you need or have, and negotiate price directly. No bidding wars, no platform commission.</p>

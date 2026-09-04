@@ -25,6 +25,8 @@ class ContentController extends Controller
             'announcement_enabled' => 'nullable|boolean',
             'hero_image_1' => 'nullable|image|max:8192',
             'hero_image_2' => 'nullable|image|max:8192',
+            'trust_image_1' => 'nullable|image|max:8192',
+            'trust_image_2' => 'nullable|image|max:8192',
         ]);
 
         $settings = SiteSettings::current();
@@ -36,7 +38,7 @@ class ContentController extends Controller
             'announcement_enabled' => $request->boolean('announcement_enabled'),
         ];
 
-        foreach (['hero_image_1', 'hero_image_2'] as $field) {
+        foreach (['hero_image_1', 'hero_image_2', 'trust_image_1', 'trust_image_2'] as $field) {
             if ($request->hasFile($field)) {
                 if ($settings->{$field}) {
                     Storage::disk('public')->delete($settings->{$field});
