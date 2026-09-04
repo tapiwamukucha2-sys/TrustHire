@@ -5,8 +5,8 @@
     {{-- Hero --}}
     <section class="reveal relative overflow-hidden rounded-2xl text-center shadow-xl">
         <div class="absolute inset-0">
-            <img src="/storage/demo/hero-1.jpg" alt="" class="hero-fade-a absolute inset-0 h-full w-full object-cover">
-            <img src="/storage/demo/hero-2.jpg" alt="" class="hero-fade-b absolute inset-0 h-full w-full object-cover">
+            <img src="{{ $settings->heroImage1Url() }}" alt="" class="hero-fade-a absolute inset-0 h-full w-full object-cover">
+            <img src="{{ $settings->heroImage2Url() }}" alt="" class="hero-fade-b absolute inset-0 h-full w-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/50 to-[#0B3A1F]/70"></div>
         </div>
 

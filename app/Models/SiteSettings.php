@@ -12,13 +12,23 @@ class SiteSettings extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['id', 'hero_headline', 'hero_subtext', 'announcement_text', 'announcement_enabled'];
+    protected $fillable = ['id', 'hero_headline', 'hero_subtext', 'announcement_text', 'announcement_enabled', 'hero_image_1', 'hero_image_2'];
 
     protected function casts(): array
     {
         return [
             'announcement_enabled' => 'boolean',
         ];
+    }
+
+    public function heroImage1Url(): string
+    {
+        return $this->hero_image_1 ? '/storage/'.$this->hero_image_1 : '/storage/demo/hero-1.jpg';
+    }
+
+    public function heroImage2Url(): string
+    {
+        return $this->hero_image_2 ? '/storage/'.$this->hero_image_2 : '/storage/demo/hero-2.jpg';
     }
 
     public static function current(): self
