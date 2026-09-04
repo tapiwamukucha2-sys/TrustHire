@@ -17,6 +17,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Uploads Disk
+    |--------------------------------------------------------------------------
+    |
+    | Disk used for admin-uploaded content (hero/trust photos, listing photo
+    | edits) as opposed to the "public" disk, which only ever holds static
+    | demo assets bundled with the app. Set UPLOADS_DISK=r2 in production
+    | (with the AWS_* / R2 env vars below filled in) so uploads land on
+    | persistent object storage instead of the web server's local, ephemeral
+    | disk. Defaults to the local "public" disk for local development.
+    |
+    */
+
+    'uploads' => env('UPLOADS_DISK', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
@@ -56,6 +72,21 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+            'report' => false,
+        ],
+
+        // Cloudflare R2 (S3-compatible). Same shape as the "s3" disk above —
+        // just point AWS_ENDPOINT at your R2 endpoint and set UPLOADS_DISK=r2.
+        'r2' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'auto'),
+            'bucket' => env('AWS_BUCKET'),
+            'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', true),
             'throw' => false,
             'report' => false,
         ],

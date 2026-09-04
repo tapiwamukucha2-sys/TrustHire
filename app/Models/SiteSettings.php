@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class SiteSettings extends Model
 {
@@ -23,22 +24,22 @@ class SiteSettings extends Model
 
     public function heroImage1Url(): string
     {
-        return $this->hero_image_1 ? '/storage/'.$this->hero_image_1 : '/storage/demo/hero-1.jpg';
+        return $this->hero_image_1 ? Storage::disk(config('filesystems.uploads'))->url($this->hero_image_1) : '/storage/demo/hero-1.jpg';
     }
 
     public function heroImage2Url(): string
     {
-        return $this->hero_image_2 ? '/storage/'.$this->hero_image_2 : '/storage/demo/hero-2.jpg';
+        return $this->hero_image_2 ? Storage::disk(config('filesystems.uploads'))->url($this->hero_image_2) : '/storage/demo/hero-2.jpg';
     }
 
     public function trustImage1Url(): string
     {
-        return $this->trust_image_1 ? '/storage/'.$this->trust_image_1 : '/storage/demo/trust-handshake.jpg';
+        return $this->trust_image_1 ? Storage::disk(config('filesystems.uploads'))->url($this->trust_image_1) : '/storage/demo/trust-handshake.jpg';
     }
 
     public function trustImage2Url(): string
     {
-        return $this->trust_image_2 ? '/storage/'.$this->trust_image_2 : '/storage/demo/trust-keyhandover.jpg';
+        return $this->trust_image_2 ? Storage::disk(config('filesystems.uploads'))->url($this->trust_image_2) : '/storage/demo/trust-keyhandover.jpg';
     }
 
     public static function current(): self

@@ -42,8 +42,9 @@ class AdminListingController extends Controller
         $photos = $listing->photos ?? [];
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('listings', 'public');
-            $photos = ['/storage/'.$path];
+            $disk = config('filesystems.uploads');
+            $path = $request->file('photo')->store('listings', $disk);
+            $photos = [Storage::disk($disk)->url($path)];
         }
 
         $listing->update([
@@ -61,9 +62,14 @@ class AdminListingController extends Controller
 
     public function destroy(Listing $listing): RedirectResponse
     {
+        $disk = config('filesystems.uploads');
+        $base = rtrim(Storage::disk($disk)->url(''), '/');
+
         foreach ($listing->photos ?? [] as $photo) {
-            $relative = ltrim(str_replace('/storage/', '', $photo), '/');
-            Storage::disk('public')->delete($relative);
+            if (str_starts_with($photo, $base)) {
+                $relative = ltrim(substr($photo, strlen($base)), '/');
+                Storage::disk($disk)->delete($relative);
+            }
         }
 
         $listing->delete();

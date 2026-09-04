@@ -1,0 +1,58 @@
+services:
+  - type: web
+    name: trusthire
+    runtime: php
+    plan: free
+    buildCommand: "composer install --no-dev --optimize-autoloader && npm ci && npm run build && php artisan storage:link && php artisan migrate --force && php artisan config:cache"
+    startCommand: "php artisan serve --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: trusthire-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: trusthire-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: trusthire-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: trusthire-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: trusthire-db
+          property: password
+      - key: UPLOADS_DISK
+        value: r2
+      - key: AWS_DEFAULT_REGION
+        value: auto
+      - key: AWS_USE_PATH_STYLE_ENDPOINT
+        value: true
+      # Set these four manually in the Render dashboard after creating your
+      # Cloudflare R2 bucket — see DEPLOY.md.
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_BUCKET
+        sync: false
+      - key: AWS_ENDPOINT
+        sync: false
+      - key: AWS_URL
+        sync: false
+
+databases:
+  - name: trusthire-db
+    plan: free

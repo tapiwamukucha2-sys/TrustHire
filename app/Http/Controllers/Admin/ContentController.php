@@ -38,12 +38,14 @@ class ContentController extends Controller
             'announcement_enabled' => $request->boolean('announcement_enabled'),
         ];
 
+        $disk = config('filesystems.uploads');
+
         foreach (['hero_image_1', 'hero_image_2', 'trust_image_1', 'trust_image_2'] as $field) {
             if ($request->hasFile($field)) {
                 if ($settings->{$field}) {
-                    Storage::disk('public')->delete($settings->{$field});
+                    Storage::disk($disk)->delete($settings->{$field});
                 }
-                $update[$field] = $request->file($field)->store('hero', 'public');
+                $update[$field] = $request->file($field)->store('hero', $disk);
             }
         }
 
