@@ -38,23 +38,24 @@ Done — this repo is pushed to `github.com/tapiwamukucha2-sys/TrustHire`.
 
 ## 3. Deploy to Render
 
+Render has **no native PHP runtime** — its language dropdown only offers
+Docker, Elixir, Go, Node, Python, Ruby, Rust. So this deploys via Docker
+instead: `Dockerfile` + `docker/` (nginx + php-fpm + supervisor) build a
+proper PHP environment, matching the same setup already working for the
+`nhaka-properties` project.
+
 1. Sign up / log in at https://render.com
 2. **New** → **Blueprint** → connect your GitHub repo (`TrustHire`). Render
-   reads `render.yaml` and provisions the free web service.
-   - If Render's blueprint doesn't recognize `runtime: php` (native PHP
-     blueprint support has changed before), create it manually instead:
-     **New → Web Service** → connect the repo → Render should auto-detect
-     PHP from `composer.json`. Set:
-     - Build Command: `composer install --no-dev --optimize-autoloader && npm ci && npm run build && php artisan storage:link && php artisan migrate --force && php artisan config:cache`
-     - Start Command: `php artisan serve --host 0.0.0.0 --port $PORT`
-3. In the web service's **Environment** tab, fill in the five `DB_*` values
-   from step 2 (Neon), plus `DB_CONNECTION=pgsql` and `DB_SSLMODE=require`
-   if the blueprint didn't already set them (the blueprint leaves them
-   blank on purpose — `sync: false`).
-4. Set `APP_URL` to your Render URL once it's assigned, e.g.
-   `https://trusthire.onrender.com` — this is what makes hero/photo URLs and
-   login redirects resolve correctly.
-5. Deploy. First deploy runs migrations automatically via the build command.
+   reads `render.yaml`, sees `runtime: docker`, and builds from `Dockerfile`.
+   - If the blueprint doesn't pick it up, create it manually instead:
+     **New → Web Service** → connect the repo → **Language: Docker** (it
+     should auto-detect the `Dockerfile` at the repo root).
+3. In the web service's **Environment** tab, fill in (all marked `sync: false`
+   in `render.yaml`, so blank by default):
+   - `APP_KEY` — generate one locally with `php artisan key:generate --show`
+   - `APP_URL` — your Render URL once assigned, e.g. `https://trusthire.onrender.com`
+   - The five `DB_*` values from step 2 (Neon)
+4. Deploy. `docker/start.sh` runs migrations automatically on container start.
 
 ## 4. Create your admin login
 
