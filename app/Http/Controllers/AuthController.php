@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -135,6 +137,45 @@ class AuthController extends Controller
 
         RateLimiter::clear($key);
         $request->session()->regenerate();
+
+        return $this->redirectAfterLogin($request);
+    }
+
+    public function googleRedirect(Request $request): RedirectResponse
+    {
+        if (! config('services.google.client_id')) {
+            return redirect()->route('login')->with('status', 'Google sign-in is not configured yet.');
+        }
+
+        $request->session()->put('google_callback', $request->query('callback', '/'));
+
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleCallback(Request $request): RedirectResponse
+    {
+        $googleUser = Socialite::driver('google')->stateless()->user();
+
+        $user = User::where('google_id', $googleUser->getId())
+            ->orWhere('email', $googleUser->getEmail())
+            ->first();
+
+        if (! $user) {
+            $user = User::create([
+                'name' => $googleUser->getName() ?: $googleUser->getNickname(),
+                'email' => $googleUser->getEmail(),
+                'password' => Hash::make(Str::random(32)),
+                'google_id' => $googleUser->getId(),
+                'photo_url' => $googleUser->getAvatar(),
+            ]);
+        } elseif (! $user->google_id) {
+            $user->update(['google_id' => $googleUser->getId()]);
+        }
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        $request->merge(['callback' => $request->session()->pull('google_callback', '/')]);
 
         return $this->redirectAfterLogin($request);
     }

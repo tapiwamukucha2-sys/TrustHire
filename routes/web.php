@@ -50,6 +50,8 @@ Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->n
 Route::post('/forgot-password', [AuthController::class, 'sendResetCode'])->name('password.send')->middleware('guest');
 Route::get('/reset-password', [AuthController::class, 'showResetPassword'])->name('password.reset')->middleware('guest');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update')->middleware('guest');
+Route::get('/auth/google/redirect', [AuthController::class, 'googleRedirect'])->name('auth.google.redirect')->middleware('guest');
+Route::get('/auth/google/callback', [AuthController::class, 'googleCallback'])->name('auth.google.callback')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware('auth')->group(function () {

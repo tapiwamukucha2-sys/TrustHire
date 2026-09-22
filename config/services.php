@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'google' => [
+        'client_id' => trim((string) env('GOOGLE_CLIENT_ID')),
+        'client_secret' => trim((string) env('GOOGLE_CLIENT_SECRET')),
+        'redirect' => trim((string) env('GOOGLE_REDIRECT_URI')),
+    ],
+
 ];

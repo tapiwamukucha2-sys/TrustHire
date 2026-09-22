@@ -38,6 +38,17 @@ services:
         sync: false
       - key: SESSION_DRIVER
         value: database
+      # Google OAuth for "Continue with Google" on /login. Set these three
+      # manually from a Google Cloud Console OAuth client — see DEPLOY.md.
+      # Sign-in works without them (the button just redirects back with a
+      # "not configured yet" message), so this can be added after the
+      # initial deploy.
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        sync: false
       # UPLOADS_DISK is left unset, so admin-uploaded photos (hero/trust
       # images, listing photo edits) go to the container's local disk. That
       # disk is wiped on every deploy (and rebuilt fresh each time on
