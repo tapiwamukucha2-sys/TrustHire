@@ -14,26 +14,22 @@ services:
         generateValue: true
       - key: DB_CONNECTION
         value: pgsql
+      - key: DB_SSLMODE
+        value: require
+      # Set these five manually in the Render dashboard from your Neon
+      # project's connection details — see DEPLOY.md. Using Neon instead of
+      # Render's own Postgres because Render's free database plan expires
+      # after 30 days; Neon's free tier does not.
       - key: DB_HOST
-        fromDatabase:
-          name: trusthire-db
-          property: host
+        sync: false
       - key: DB_PORT
-        fromDatabase:
-          name: trusthire-db
-          property: port
+        sync: false
       - key: DB_DATABASE
-        fromDatabase:
-          name: trusthire-db
-          property: database
+        sync: false
       - key: DB_USERNAME
-        fromDatabase:
-          name: trusthire-db
-          property: user
+        sync: false
       - key: DB_PASSWORD
-        fromDatabase:
-          name: trusthire-db
-          property: password
+        sync: false
       - key: UPLOADS_DISK
         value: r2
       - key: AWS_DEFAULT_REGION
@@ -52,7 +48,3 @@ services:
         sync: false
       - key: AWS_URL
         sync: false
-
-databases:
-  - name: trusthire-db
-    plan: free
